@@ -21,6 +21,7 @@ use Bnomei\ScipLaravel\Support\VoltBladeModelMemberReferenceFinder;
 use Bnomei\ScipLaravel\Symbols\LaravelSymbolNormalizer;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\ModelInspector;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Str;
 use Laravel\Ranger\Components\Model as RangerModel;
 use Laravel\Surveyor\Analyzed\ClassResult;
@@ -41,11 +42,13 @@ use function array_values;
 use function count;
 use function implode;
 use function in_array;
+use function is_a;
 use function is_array;
 use function is_object;
 use function is_string;
 use function ksort;
 use function method_exists;
+use function preg_match;
 use function realpath;
 use function sort;
 use function str_replace;
@@ -213,14 +216,19 @@ final class ModelEnricher implements Enricher
                 $className,
                 $reflection->getStartLine(),
             );
-            $attributeMetadata = $this->attributeMetadata($inspector, $className);
-            $literalAttributes = $this->literalAttributeFinder->find($reflection);
-            $attributeNames = $this->attributeNames($model, $attributeMetadata, $literalAttributes);
-            $relationNames = $this->relationNames($model);
-            $castNames = $this->castNames($attributeMetadata);
             $declaredMethods = $this->declaredMethods($reflection);
             $callableMethods = $this->callableMethods($reflection);
             $declaredProperties = $this->declaredProperties($reflection);
+            $attributeMetadata = $this->attributeMetadata($inspector, $className);
+            $literalAttributes = $this->literalAttributeFinder->find($reflection);
+            $attributeNames = $this->attributeNames(
+                $model,
+                $attributeMetadata,
+                $literalAttributes,
+                $this->inferredAttributeNames($declaredMethods, $classResult, $model->snakeCaseAttributes()),
+            );
+            $relationNames = $this->relationNames($model, $this->inferredRelationNames($declaredMethods, $classResult));
+            $castNames = $this->castNames($attributeMetadata);
             $readSymbols = [];
             $writeSymbols = [];
             $callSymbols = [];
@@ -630,10 +638,15 @@ final class ModelEnricher implements Enricher
     /**
      * @param array<string, array{cast: ?string}> $attributeMetadata
      * @param array<string, SourceRange> $literalAttributes
+     * @param list<string> $inferredAttributeNames
      * @return list<string>
      */
-    private function attributeNames(RangerModel $model, array $attributeMetadata, array $literalAttributes): array
-    {
+    private function attributeNames(
+        RangerModel $model,
+        array $attributeMetadata,
+        array $literalAttributes,
+        array $inferredAttributeNames = [],
+    ): array {
         $names = array_keys($model->getAttributes());
 
         foreach (array_keys($attributeMetadata) as $attributeName) {
@@ -641,6 +654,10 @@ final class ModelEnricher implements Enricher
         }
 
         foreach (array_keys($literalAttributes) as $attributeName) {
+            $names[] = $attributeName;
+        }
+
+        foreach ($inferredAttributeNames as $attributeName) {
             $names[] = $attributeName;
         }
 
@@ -654,12 +671,13 @@ final class ModelEnricher implements Enricher
     }
 
     /**
+     * @param list<string> $inferredRelationNames
      * @return list<string>
      */
-    private function relationNames(RangerModel $model): array
+    private function relationNames(RangerModel $model, array $inferredRelationNames = []): array
     {
         $names = array_values(array_filter(
-            array_keys($model->getRelations()),
+            array_merge(array_keys($model->getRelations()), $inferredRelationNames),
             static fn(mixed $value): bool => is_string($value) && $value !== '',
         ));
         sort($names);
@@ -721,6 +739,63 @@ final class ModelEnricher implements Enricher
         }
 
         return $cache[$cacheKey] = $this->memberAliases($attributeName, $snakeCaseAttributes);
+    }
+
+    /**
+     * @param array<string, \ReflectionMethod> $declaredMethods
+     * @return list<string>
+     */
+    private function inferredAttributeNames(
+        array $declaredMethods,
+        ?ClassResult $classResult,
+        bool $snakeCaseAttributes,
+    ): array {
+        $names = [];
+
+        foreach ($declaredMethods as $methodName => $method) {
+            if ($this->isAttributeMethod($method, $classResult, $methodName)) {
+                $canonical = Str::camel($methodName);
+                $names[] = $snakeCaseAttributes ? Str::snake($canonical) : $canonical;
+                continue;
+            }
+
+            if (preg_match('/^(?:get|set)(.+)Attribute$/', $methodName, $matches) !== 1) {
+                continue;
+            }
+
+            $canonical = Str::camel($matches[1] ?? '');
+
+            if ($canonical === '') {
+                continue;
+            }
+
+            $names[] = $snakeCaseAttributes ? Str::snake($canonical) : $canonical;
+        }
+
+        $names = array_values(array_unique($names));
+        sort($names);
+
+        return $names;
+    }
+
+    /**
+     * @param array<string, \ReflectionMethod> $declaredMethods
+     * @return list<string>
+     */
+    private function inferredRelationNames(array $declaredMethods, ?ClassResult $classResult): array
+    {
+        $names = [];
+
+        foreach ($declaredMethods as $methodName => $method) {
+            if ($this->isRelationMethod($method, $classResult, $methodName)) {
+                $names[] = $methodName;
+            }
+        }
+
+        $names = array_values(array_unique($names));
+        sort($names);
+
+        return $names;
     }
 
     /**
@@ -897,6 +972,33 @@ final class ModelEnricher implements Enricher
             $type = $returnTypePayload['type'] ?? null;
 
             if ($type instanceof ClassType && $type->resolved() === Attribute::class) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function isRelationMethod(\ReflectionMethod $method, ?ClassResult $classResult, string $methodName): bool
+    {
+        $returnType = $method->getReturnType();
+
+        if (
+            $returnType instanceof \ReflectionNamedType
+            && !$returnType->isBuiltin()
+            && is_a(ltrim($returnType->getName(), '\\'), Relation::class, true)
+        ) {
+            return true;
+        }
+
+        if ($classResult === null || !$classResult->hasMethod($methodName)) {
+            return false;
+        }
+
+        foreach ($classResult->getMethod($methodName)->returnTypes() as $returnTypePayload) {
+            $type = $returnTypePayload['type'] ?? null;
+
+            if ($type instanceof ClassType && is_a($type->resolved(), Relation::class, true)) {
                 return true;
             }
         }

@@ -100,15 +100,6 @@
             "occurrences_sha256": "6532e0f16cfaa5a011354b5504a03b8120cf95dea876df87acabe3a4221c85f1"
         },
         {
-            "relative_path": "app/Http/Controllers/AcceptanceFullOnlyController.php",
-            "language": "19",
-            "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "symbol_count": 2,
-            "occurrence_count": 6,
-            "symbols_sha256": "1bc39486d409702feddfbd2268afebac3866763e94c1fa255b5e9b242aaf0d1a",
-            "occurrences_sha256": "caa5bd89cd8874ea42c722f3ef53957f68f2afb1443d2241c858cedd8ec3a906"
-        },
-        {
             "relative_path": "app/Http/Controllers/AcceptanceInertiaController.php",
             "language": "19",
             "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -125,15 +116,6 @@
             "occurrence_count": 4,
             "symbols_sha256": "c9d3fca274fc26c906391a91640cdef52c14e16d5b09f8e4598a04f19872cbf1",
             "occurrences_sha256": "6f5a7835388530853360be503be7ade24172bef47ccc701d8d76c4f436a2ad1b"
-        },
-        {
-            "relative_path": "app/Http/Controllers/AcceptanceRouteController.php",
-            "language": "19",
-            "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "symbol_count": 2,
-            "occurrence_count": 6,
-            "symbols_sha256": "a1ae581e89219275a8bdc7c5ad0bc32bdebdba2da9e34b17ce226633c7c2e8be",
-            "occurrences_sha256": "cbc76f48f1e866ba441435f613bc01d9c569ec36f410632ee0aa59b009e612b6"
         },
         {
             "relative_path": "app/Http/Controllers/AcceptanceValidatedRouteController.php",
@@ -366,7 +348,7 @@
             "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "symbol_count": 17,
             "occurrence_count": 40,
-            "symbols_sha256": "dc47059932386126921cd541a2f7e3472d70df56e1c7a5447f5431f32c88575e",
+            "symbols_sha256": "a38e6db3c6e29414315a5d0f98dbd181d74eeef60c3b8b6f9f2e4d18a7075d4a",
             "occurrences_sha256": "22f2e8f3341b972e4a488084fac5130d496497648d25af83cd565a73021aac63"
         },
         {
@@ -375,7 +357,7 @@
             "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "symbol_count": 11,
             "occurrence_count": 21,
-            "symbols_sha256": "c17ad0888b2ff3dafa7e5797601064b6fe75a4914350b9cbc133c962a4fa1ca6",
+            "symbols_sha256": "268e255b17606a603d1ffb6553e5d70da2be91df76d54cc9788f67702ba44e37",
             "occurrences_sha256": "a2d6f5a5d52f319fe9541e1d8216513bbd4be27103d02dcda2f43cfa50eea509"
         },
         {
@@ -402,7 +384,7 @@
             "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "symbol_count": 12,
             "occurrence_count": 19,
-            "symbols_sha256": "56c633fdf4af95fec9ae69974825bb8b33c7afd59d94aba9d9121677e8acc005",
+            "symbols_sha256": "62bc510964cee22d55a269f882e9b519eb5cb5c8fe1ee781178e6774865bd9c5",
             "occurrences_sha256": "dfbfb240fd8174e693c3dad51923282de74385651c3ee21e75fa7614a2da1718"
         },
         {
@@ -411,7 +393,7 @@
             "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
             "symbol_count": 4,
             "occurrence_count": 10,
-            "symbols_sha256": "b87e65eb5af8ab84d7c4752b65b5e3722aa7a9619c335422d787c727892af0ab",
+            "symbols_sha256": "5267be5a9f31f45b5ce084450c614dd01eb9de4602b79029d82a7644c071ecad",
             "occurrences_sha256": "a7bad6f92e5b6dfdee99ca7d50b6944abf419a3996adcf77f231770213851b56"
         },
         {
@@ -1385,6 +1367,15 @@
             "occurrence_count": 4,
             "symbols_sha256": "bb63a7930e405610b53e26213bd95a83a16101c03df2e0157923a6cfd234e27e",
             "occurrences_sha256": "3fd299e4901fc3937a0824ed8891a975b752f21c2e1658869f1bba24a5008c15"
+        },
+        {
+            "relative_path": "routes/web.php",
+            "language": "",
+            "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "symbol_count": 1,
+            "occurrence_count": 3,
+            "symbols_sha256": "4f6a117641e4030278835b3e8d8039cb072967ada211cd4e39f16eaff823e764",
+            "occurrences_sha256": "2574a1703bde576d79e15e0aa927490617a41adec5feaf38756ab47ad009b108"
         },
         {
             "relative_path": "tests/Fakes/AcceptancePusherFake.php",
@@ -2703,140 +2694,6 @@
             ]
         },
         {
-            "relative_path": "app/Http/Controllers/AcceptanceFullOnlyController.php",
-            "symbols": [
-                {
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceFullOnlyController#",
-                    "display_name": "AcceptanceFullOnlyController",
-                    "kind": 7,
-                    "documentation": [
-                        "Surveyor public methods: __invoke()",
-                        "```php\nfinal class AcceptanceFullOnlyController\n```"
-                    ],
-                    "relationships": [],
-                    "signature": "class AcceptanceFullOnlyController",
-                    "enclosing_symbol": ""
-                },
-                {
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceFullOnlyController#__invoke().",
-                    "display_name": "__invoke()",
-                    "kind": 26,
-                    "documentation": [
-                        "```php\npublic function __invoke(): \\Illuminate\\Contracts\\View\\View\n```"
-                    ],
-                    "relationships": [],
-                    "signature": "__invoke()",
-                    "enclosing_symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceFullOnlyController#"
-                }
-            ],
-            "occurrences": [
-                {
-                    "range": [
-                        10,
-                        20,
-                        10,
-                        28
-                    ],
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceFullOnlyController#__invoke().",
-                    "symbol_roles": 1,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        10,
-                        4,
-                        13,
-                        5
-                    ]
-                },
-                {
-                    "range": [
-                        10,
-                        32,
-                        10,
-                        36
-                    ],
-                    "symbol": "scip-php composer laravel/framework c761f591209b45f56c1317ecbff0b04c89cf7ba2 Illuminate/Contracts/View/View#",
-                    "symbol_roles": 8,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        10,
-                        4,
-                        13,
-                        5
-                    ]
-                },
-                {
-                    "range": [
-                        12,
-                        15,
-                        12,
-                        19
-                    ],
-                    "symbol": "scip-php composer laravel/framework c761f591209b45f56c1317ecbff0b04c89cf7ba2 view().",
-                    "symbol_roles": 8,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        10,
-                        4,
-                        13,
-                        5
-                    ]
-                },
-                {
-                    "range": [
-                        12,
-                        21,
-                        12,
-                        49
-                    ],
-                    "symbol": "laravel composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 views/`acceptance.translation-probe`.",
-                    "symbol_roles": 8,
-                    "syntax_kind": 30,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": []
-                },
-                {
-                    "range": [
-                        6,
-                        4,
-                        6,
-                        34
-                    ],
-                    "symbol": "scip-php composer laravel/framework c761f591209b45f56c1317ecbff0b04c89cf7ba2 Illuminate/Contracts/View/View#",
-                    "symbol_roles": 8,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": []
-                },
-                {
-                    "range": [
-                        8,
-                        12,
-                        8,
-                        40
-                    ],
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceFullOnlyController#",
-                    "symbol_roles": 1,
-                    "syntax_kind": 19,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        8,
-                        0,
-                        14,
-                        1
-                    ]
-                }
-            ]
-        },
-        {
             "relative_path": "app/Http/Controllers/AcceptanceInertiaController.php",
             "symbols": [
                 {
@@ -3307,143 +3164,6 @@
                         4,
                         11,
                         5
-                    ]
-                }
-            ]
-        },
-        {
-            "relative_path": "app/Http/Controllers/AcceptanceRouteController.php",
-            "symbols": [
-                {
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceRouteController#",
-                    "display_name": "AcceptanceRouteController",
-                    "kind": 7,
-                    "documentation": [
-                        "Surveyor public methods: show()",
-                        "```php\nfinal class AcceptanceRouteController\n```"
-                    ],
-                    "relationships": [],
-                    "signature": "class AcceptanceRouteController",
-                    "enclosing_symbol": ""
-                },
-                {
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceRouteController#show().",
-                    "display_name": "show()",
-                    "kind": 26,
-                    "documentation": [
-                        "Surveyor return contract: Illuminate\\Contracts\\View\\View|Illuminate\\View\\View",
-                        "Surveyor return type: Illuminate\\Contracts\\View\\View|Illuminate\\View\\View",
-                        "Surveyor return variants: line 11 => Illuminate\\Contracts\\View\\View; line 13 => Illuminate\\Contracts\\View\\View|Illuminate\\View\\View",
-                        "```php\npublic function show(): \\Illuminate\\Contracts\\View\\View\n```"
-                    ],
-                    "relationships": [],
-                    "signature": "show(): Illuminate\\Contracts\\View\\View|Illuminate\\View\\View",
-                    "enclosing_symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceRouteController#"
-                }
-            ],
-            "occurrences": [
-                {
-                    "range": [
-                        10,
-                        20,
-                        10,
-                        24
-                    ],
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceRouteController#show().",
-                    "symbol_roles": 1,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        10,
-                        4,
-                        13,
-                        5
-                    ]
-                },
-                {
-                    "range": [
-                        10,
-                        28,
-                        10,
-                        32
-                    ],
-                    "symbol": "scip-php composer laravel/framework c761f591209b45f56c1317ecbff0b04c89cf7ba2 Illuminate/Contracts/View/View#",
-                    "symbol_roles": 8,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        10,
-                        4,
-                        13,
-                        5
-                    ]
-                },
-                {
-                    "range": [
-                        12,
-                        15,
-                        12,
-                        19
-                    ],
-                    "symbol": "scip-php composer laravel/framework c761f591209b45f56c1317ecbff0b04c89cf7ba2 view().",
-                    "symbol_roles": 8,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        10,
-                        4,
-                        13,
-                        5
-                    ]
-                },
-                {
-                    "range": [
-                        12,
-                        21,
-                        12,
-                        46
-                    ],
-                    "symbol": "laravel composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 views/`acceptance.prefixed-probe`.",
-                    "symbol_roles": 8,
-                    "syntax_kind": 30,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": []
-                },
-                {
-                    "range": [
-                        6,
-                        4,
-                        6,
-                        34
-                    ],
-                    "symbol": "scip-php composer laravel/framework c761f591209b45f56c1317ecbff0b04c89cf7ba2 Illuminate/Contracts/View/View#",
-                    "symbol_roles": 8,
-                    "syntax_kind": 6,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": []
-                },
-                {
-                    "range": [
-                        8,
-                        12,
-                        8,
-                        37
-                    ],
-                    "symbol": "scip-php composer laravel/laravel f356beac8797afcc8ee8a629ad8f4cde94ac0fd7 App/Http/Controllers/AcceptanceRouteController#",
-                    "symbol_roles": 1,
-                    "syntax_kind": 19,
-                    "override_documentation": [],
-                    "diagnostics": [],
-                    "enclosing_range": [
-                        8,
-                        0,
-                        14,
-                        1
                     ]
                 }
             ]
@@ -8092,7 +7812,7 @@
                         "Laravel model attribute contracts: email: ?string, id: int, name: ?string, role: ?string, team_id: ?int",
                         "Laravel model attributes: email, id, name, role, team_id",
                         "Laravel model relation contracts: team: ?App\\Models\\Team",
-                        "Laravel model relations: team",
+                        "Laravel model relations: team, team",
                         "Laravel model snake_case attribute aliases: enabled",
                         "Surveyor extends: Illuminate\\Database\\Eloquent\\Model",
                         "Surveyor public methods: roleColor(), roleLabel(), team()",
