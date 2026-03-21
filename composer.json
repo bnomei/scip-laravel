@@ -1,7 +1,7 @@
 {
     "name": "bnomei/scip-laravel",
     "description": "Laravel-aware SCIP index generation for Laravel applications.",
-    "homepage": "https://github.com/bnomei/laravel-scip",
+    "homepage": "https://github.com/bnomei/scip-laravel",
     "type": "library",
     "keywords": [
         "laravel",
@@ -18,8 +18,8 @@
     ],
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/bnomei/laravel-scip/issues",
-        "source": "https://github.com/bnomei/laravel-scip"
+        "issues": "https://github.com/bnomei/scip-laravel/issues",
+        "source": "https://github.com/bnomei/scip-laravel"
     },
     "require": {
         "php": "^8.3",

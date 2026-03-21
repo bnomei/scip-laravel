@@ -2,7 +2,7 @@
 
 [![Laravel 11-13](https://flat.badgen.net/badge/Laravel/11-13?color=F05340)](https://laravel.com)
 ![PHP 8.3+](https://flat.badgen.net/badge/PHP/8.3%2B?color=4E5B93&icon=php&label)
-[![Tests](https://github.com/bnomei/laravel-scip/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/bnomei/laravel-scip/actions/workflows/tests.yml)
+[![Tests](https://github.com/bnomei/scip-laravel/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/bnomei/scip-laravel/actions/workflows/tests.yml)
 [![License](https://flat.badgen.net/badge/license/MIT?color=999999)](LICENSE)
 [![Discord](https://flat.badgen.net/badge/discord/bnomei?color=7289da&icon=discord&label)](https://discordapp.com/users/bnomei)
 [![Buymecoffee](https://flat.badgen.net/badge/icon/donate?icon=buymeacoffee&color=FF813F&label)](https://www.buymeacoffee.com/bnomei)
@@ -34,7 +34,7 @@ Consumers should execute the repo-local `vendor/bin/scip-laravel` binary to gene
 
 The package bundles a compatible `scip-php` runtime inside this repository so Composer installs do not depend on an unpublished upstream tag.
 
-The vendored `packages/scip-php` copy is intentionally patched locally for performance and bootstrap compatibility. See [packages/scip-php/LOCAL_PATCHES.md](/Users/bnomei/Sites/laravel-scip/packages/scip-php/LOCAL_PATCHES.md) and do not update that directory blindly from upstream.
+The vendored `packages/scip-php` copy is intentionally patched locally for performance and bootstrap compatibility. See [packages/scip-php/LOCAL_PATCHES.md](/Users/bnomei/Sites/scip-laravel/packages/scip-php/LOCAL_PATCHES.md) and do not update that directory blindly from upstream.
 
 ## Install
 
@@ -130,7 +130,7 @@ CLI flags override config defaults for `output`, `config`, `mode`, and `feature`
 
 ## Local Testbeds
 
-A repeatable local Flux testbed is available under [fixtures/flux-app/README.md](/Users/bnomei/Sites/laravel-scip/fixtures/flux-app/README.md).
+A repeatable local Flux testbed is available under [fixtures/flux-app/README.md](/Users/bnomei/Sites/scip-laravel/fixtures/flux-app/README.md).
 
 Prepare the local checkout:
 
