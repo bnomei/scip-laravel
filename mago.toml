@@ -1,0 +1,19 @@
+php-version = "8.3"
+
+[source]
+paths = [
+    "bin",
+    "src",
+    "tests",
+]
+includes = [
+    "vendor",
+    "packages/scip-php/src",
+]
+excludes = [
+    "fixtures",
+]
+extensions = ["php"]
+
+[analyzer]
+class-initializers = ["setUp"]

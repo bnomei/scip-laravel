@@ -1,0 +1,13 @@
+fail_fast = true
+default_install_hook_types = ["pre-commit"]
+exclude = { glob = ["vendor/**", "fixtures/**", "packages/scip-php/**"] }
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "mago-format"
+name = "mago format"
+language = "system"
+entry = "mago format --check"
+files = { glob = ["bin/scip-laravel", "src/**/*.php", "tests/**/*.php"] }

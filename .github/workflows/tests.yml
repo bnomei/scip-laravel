@@ -1,0 +1,65 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpunit:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer:v2
+
+      - name: Resolve Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-8.4-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-8.4-composer-
+
+      - name: Install root dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Restore Flux acceptance fixture
+        uses: actions/cache@v4
+        with:
+          path: fixtures/_worktrees/flux-app
+          key: ${{ runner.os }}-php-8.4-flux-fixture-${{ hashFiles('fixtures/flux-app/scaffold.sh', 'fixtures/flux-app/prepare-acceptance.sh', 'fixtures/flux-app/normalize-composer.php', 'fixtures/flux-app/prepare-acceptance-composer.php', 'fixtures/flux-app/materialize-acceptance.php', 'fixtures/flux-app/acceptance-composer.lock', 'fixtures/flux-app/acceptance-stubs/files/**') }}
+
+      - name: Prepare Flux acceptance fixture
+        run: |
+          if [ ! -f fixtures/_worktrees/flux-app/.scip-laravel-acceptance-ready ] || [ ! -f fixtures/_worktrees/flux-app/vendor/autoload.php ] || ! cmp --silent fixtures/flux-app/acceptance-composer.lock fixtures/_worktrees/flux-app/composer.lock; then
+            ./fixtures/flux-app/prepare-acceptance.sh
+          fi
+
+      - name: Verify Flux acceptance fixture
+        run: |
+          test -f fixtures/_worktrees/flux-app/.scip-laravel-acceptance-ready
+          cmp --silent fixtures/flux-app/acceptance-composer.lock fixtures/_worktrees/flux-app/composer.lock
+          test -f fixtures/_worktrees/flux-app/vendor/autoload.php
+
+      - name: Run test suite
+        run: composer test

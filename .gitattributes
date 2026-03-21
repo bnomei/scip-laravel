@@ -1,0 +1,36 @@
+* text=auto eol=lf
+
+*.php diff=php
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+*.scip binary
+
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+composer.lock export-ignore
+fixtures/** export-ignore
+phpunit.xml export-ignore
+phpunit.xml.dist export-ignore
+specs/** export-ignore
+tests/** export-ignore
+
+packages/scip-php/.dockerignore export-ignore
+packages/scip-php/.github/** export-ignore
+packages/scip-php/.gitignore export-ignore
+packages/scip-php/.phpunit.result/** export-ignore
+packages/scip-php/.zed/** export-ignore
+packages/scip-php/CODEOWNERS export-ignore
+packages/scip-php/composer.lock export-ignore
+packages/scip-php/CONTRIBUTING.md export-ignore
+packages/scip-php/Dockerfile export-ignore
+packages/scip-php/phpcs.xml export-ignore
+packages/scip-php/phpstan.neon export-ignore
+packages/scip-php/phpunit.xml export-ignore
+packages/scip-php/README.md export-ignore
+packages/scip-php/src/Bindings/scip.proto export-ignore
+packages/scip-php/tests/** export-ignore

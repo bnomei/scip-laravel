@@ -1,0 +1,3 @@
+<div>
+    {{ $account->displayName() }}
+</div>

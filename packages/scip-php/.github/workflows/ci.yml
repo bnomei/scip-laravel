@@ -1,0 +1,167 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        php: ["8.4"]
+        go: ["1.25"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Install Go
+        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache: true
+      - name: Install scip
+        run: |
+          git clone https://github.com/sourcegraph/scip.git --depth=1
+          cd scip
+          go build -o scip ./cmd/scip
+          mv scip /usr/local/bin/scip
+      - name: Install PHP
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
+      - name: Validate composer
+        run: composer validate --strict --check-lock --with-dependencies
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+      - name: Test
+        run: vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.xml --colors=never
+        env:
+          XDEBUG_MODE: coverage
+      - name: Upload coverage
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+
+  lint-phpcs:
+    name: PHP CodeSniffer
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        php: ["8.4"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Install PHP
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - name: Validate composer
+        run: composer validate --strict --check-lock --with-dependencies
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+      - name: PHP CodeSniffer
+        run: vendor/bin/phpcs --no-colors
+
+  lint-phpstan:
+    name: PHPStan
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        php: ["8.4"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Install PHP
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - name: Validate composer
+        run: composer validate --strict --check-lock --with-dependencies
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+      - name: PHPStan
+        run: vendor/bin/phpstan
+
+  lint-composer-audit:
+    name: Composer audit
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        php: ["8.4"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Install PHP
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - name: Validate composer
+        run: composer validate --strict --check-lock --with-dependencies
+      - name: Audit
+        run: composer audit --locked --no-interaction
+
+  scip:
+    name: SCIP
+    needs: [test, lint-phpstan, lint-phpcs]
+    if: github.repository == 'davidrjenni/scip-php'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Install PHP
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+      - name: Generate SCIP data
+        uses: davidrjenni/scip-php@main
+        with:
+          entrypoint: /usr/bin/scip-php
+      # - name: Upload SCIP index
+      #   uses: davidrjenni/scip-php@main
+      #   with:
+      #     entrypoint: /usr/bin/src
+      #     args: code-intel upload -repo=github.com/${{ github.repository }} -commit=${{ github.sha }} -root=${{ github.workspace }} -github-token=${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Build and push image
+    needs: [scip]
+    if: |
+      github.repository == 'davidrjenni/scip-php' &&
+      (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - name: Login to Docker Hub
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Login to GitHub container registry
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
+        with:
+          images: |
+            davidrjenni/scip-php
+            ghcr.io/davidrjenni/scip-php
+      - name: Build and push
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

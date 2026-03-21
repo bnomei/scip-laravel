@@ -1,0 +1,3 @@
+<div>
+    {{ $user->display_name }}
+</div>

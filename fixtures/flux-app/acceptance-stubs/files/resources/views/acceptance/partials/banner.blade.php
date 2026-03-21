@@ -1,0 +1,1 @@
+<div>Acceptance banner</div>
