@@ -20,3 +20,4 @@ coverage/
 .frigg/
 specs/
 docs/
+.githooks
